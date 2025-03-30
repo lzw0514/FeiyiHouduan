@@ -3,7 +3,7 @@ package com.zhiwenliu.feiyihouduan.Controller;
 import com.zhiwenliu.feiyihouduan.Service.UserService;
 import com.zhiwenliu.feiyihouduan.pojo.Result;
 import com.zhiwenliu.feiyihouduan.pojo.User;
-import com.zhiwenliu.feiyihouduan.pojo.UserDTO;
+import com.zhiwenliu.feiyihouduan.pojo.userLoginDTO;
 import com.zhiwenliu.feiyihouduan.utils.JwtUtil;
 import com.zhiwenliu.feiyihouduan.utils.Md5Util;
 import jakarta.validation.constraints.Pattern;
@@ -21,7 +21,6 @@ import java.util.concurrent.TimeUnit;
 @RestController
 @RequestMapping("/user")
 @Validated
-@CrossOrigin(origins = "http://localhost:8081")
 @Slf4j
 public class UserController {
     @Autowired
@@ -31,16 +30,18 @@ public class UserController {
 
     /**
      * 用户注册
-     * @param username
-     * @param password
+     * @param user
      * @return
      */
     @PostMapping("/register")
-    public Result register(@Pattern(regexp = "^\\S{5,16}$") String username, @Pattern(regexp = "^\\S{5,16}$")String password){
+    public Result register(@RequestBody User user){
+        String username=user.getUsername();
+        String email=user.getEmail();
+        String password=user.getPassword();
         //查询用户是否存在
         User u=userService.findByUserName(username);
         if(u==null){
-            userService.register(username,password);
+            userService.register(username,email,password);
             return Result.success();
         }
         else{
@@ -49,15 +50,15 @@ public class UserController {
     }
 
     /**
-     *
-     * @param userDTO
+     * 用户登录
+     * @param userLoginDTO
      * @return
      */
     @PostMapping("/login")
-    public Result<String> login(@RequestBody UserDTO userDTO){
+    public Result<String> login(@RequestBody userLoginDTO userLoginDTO){
         //查询用户是否存在
-        String username=userDTO.getUsername();
-        String password=userDTO.getPassword();
+        String username= userLoginDTO.getUsername();
+        String password= userLoginDTO.getPassword();
         System.out.println("用户名："+username);
         User logionUser=userService.findByUserName(username);
         if(logionUser==null){
@@ -66,7 +67,7 @@ public class UserController {
         log.debug("登录密码1：{}",Md5Util.getMD5String(password));
         log.debug("登录密码2：{}",logionUser.getPassword());
         //判断密码是否正确
-        if(password.equals(logionUser.getPassword())){
+        if(Md5Util.getMD5String(password).equals(logionUser.getPassword())){
             //登录成功，生成token
             Map<String,Object> claims=new HashMap<>();
             claims.put("id",logionUser.getId());

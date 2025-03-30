@@ -18,10 +18,10 @@ public class UserServiceImpl implements UserService {
         return u;
     }
 
-    public void register(String username, String password) {
+    public void register(String username,String email, String password) {
         //加密密码
         String md5String = Md5Util.getMD5String(password);
         //添加用户
-        userMapper.add(username,md5String);
+        userMapper.add(username,email,md5String);
     }
 }

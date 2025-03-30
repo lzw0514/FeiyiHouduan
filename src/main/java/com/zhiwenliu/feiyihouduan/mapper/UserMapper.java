@@ -14,10 +14,11 @@ public interface UserMapper {
      * 添加用户
      * @param username
      * @param password
+     * @param email
      */
-    @Insert("insert into users(username,password,role,create_time,update_time)" +
-            " values(#{username},#{password},#{role},now(),now())")
-    void add(String username, String password);
+    @Insert("insert into users(username,password,email,createTime,updatedTime)" +
+            " values(#{username},#{password},#{email},now(),now())")
+    void add(String username, String email,String password);
 
     /**
      * 根据用户名查询用户

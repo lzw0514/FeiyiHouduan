@@ -13,4 +13,4 @@ mybatis:
   configuration:
     map-underscore-to-camel-case: true #开启驼峰命名和下划线命名的自动转换
 server:
-  port: 8080
+  port: 8081
