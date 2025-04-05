@@ -35,4 +35,14 @@ public class HeritageServiceImpl implements HeritageService {
         return new PageResult(pages.getTotal(),pages.getResult());
 
     }
+
+    /**
+     * 根据id查询
+     * @param id
+     * @return
+     */
+    public HeritageVO getById(Long id) {
+        HeritageVO heritageVO = heritageMapper.getById(id);
+        return heritageVO;
+    }
 }

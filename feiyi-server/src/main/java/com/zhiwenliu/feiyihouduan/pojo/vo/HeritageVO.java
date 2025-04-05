@@ -22,6 +22,6 @@ public class HeritageVO {
     private String protectionUnit;  // 对应 VARCHAR(255)
 
     //非遗简介
-    private String project_description;
+    private String projectDescription;
 
 }

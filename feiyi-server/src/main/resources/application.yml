@@ -15,6 +15,12 @@ mybatis:
   configuration:
     map-underscore-to-camel-case: true #开启驼峰命名和下划线命名的自动转换
 
-
+logging:
+  level:
+    com:
+      sky:
+        mapper: debug
+        service: info
+        controller: info
 server:
   port: 8081
