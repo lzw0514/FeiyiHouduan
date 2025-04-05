@@ -1,7 +1,0 @@
-package com.zhiwenliu.feiyihouduan.pojo;
-
-public class UserDTO {
-
-    private String username;
-    private String password;
-}
